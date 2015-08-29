@@ -1,11 +1,39 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".EyeActivity">
+    android:layout_height="match_parent" android:paddingLeft="0dp"
+    android:paddingRight="0dp"
+    android:paddingTop="0dp"
+    android:paddingBottom="0dp" tools:context=".EyeActivity">
 
-    <TextView android:text="@string/hello_world" android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/layoutControls"
+        android:layout_width="100dp"
+        android:background="#ff0000"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_height="match_parent">
+
+    </LinearLayout>
+    <com.williwoodstudios.mildren.mildredsface.EyeView
+        class="com.williwoodstudios.mildren.mildredsface.EyeView"
+        android:id="@+id/viewLeftEye"
+        android:layout_alignParentTop="true"
+        android:background="#00ff00"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@id/layoutControls"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <com.williwoodstudios.mildren.mildredsface.EyeView
+        class="com.williwoodstudios.mildren.mildredsface.EyeView"
+        android:id="@+id/viewRightEye"
+        android:layout_alignParentTop="true"
+        android:background="#0000ff"
+        android:layout_toRightOf="@id/layoutControls"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
 </RelativeLayout>
