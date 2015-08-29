@@ -18,8 +18,8 @@ public class EyeView extends View {
     private Paint mPaintEyeOutline;
     private Paint mPaintPupilFill;
 
-    private double mAngle = 0;
-    private double mRadius = 1;
+    private double mPupilX = 1;
+    private double mPupilY = 0;
 
     public EyeView(Context context) {
         super(context);
@@ -64,7 +64,63 @@ public class EyeView extends View {
         invalidate((int)(mLastX-20),(int)(mLastY-20),(int)(mLastX+20),(int)(mLastY+20));
         mLastX = event.getX();
         mLastY = event.getY();
-        invalidate((int)(mLastX-20),(int)(mLastY-20),(int)(mLastX+20),(int)(mLastY+20));
+
+        float haWidth = getWidth() / 2.0f;
+        float haHeight = getHeight() / 2.0f;
+
+        float radius = min(haHeight - 10, haWidth - 10);
+        float radiusForPupil = radius - radius/5;
+
+        float deltaX = mLastX - haWidth;
+        float deltaY = mLastY - haHeight;
+
+        if (deltaX == 0 && deltaY == 0) {
+            mPupilX = 0;
+            mPupilY = 0;
+        } else if (deltaX == 0) {
+            double possible = deltaY / radiusForPupil;
+            if (possible < -1) {
+                possible = -1;
+            } else if (possible > 1) {
+                possible = 1;
+            }
+
+            mPupilX = 0;
+            mPupilY = possible;
+        } else if (deltaY == 0) {
+            double possible = deltaX / radiusForPupil;
+            if (possible < -1) {
+                possible = -1;
+            } else if (possible > 1) {
+                possible = 1;
+            }
+            mPupilX = possible;
+            mPupilY = 0;
+        } else {
+            double angle = Math.atan(deltaY / deltaX);
+            if (deltaX > 0 && deltaY > 0) {
+                // good
+            } else if (deltaX > 0) {
+                angle = Math.PI * 2 + angle;
+            } else if (deltaY > 0) {
+                angle = Math.PI + angle;
+            } else {
+                angle = Math.PI + angle;
+            }
+            double effectiveRadius = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+            if (effectiveRadius > radiusForPupil) {
+                mPupilX = Math.cos(angle);
+                mPupilY = Math.sin(angle);
+            } else {
+                mPupilX = deltaX / radiusForPupil;
+                mPupilY = deltaY / radiusForPupil;
+            }
+
+            Log.e(LOG_TAG,"Angle: " + angle + " " + (angle / 2 / Math.PI * 360));
+        }
+
+        // invalidate((int)(mLastX-20),(int)(mLastY-20),(int)(mLastX+20),(int)(mLastY+20));
+        invalidate();
         return true;
     }
 
@@ -81,10 +137,10 @@ public class EyeView extends View {
         canvas.drawCircle(haWidth, haHeight, radius, mPaintEyeFill);
         canvas.drawCircle(haWidth,haHeight,radius,mPaintEyeOutline);
 
-        float pupilX = (float)(haWidth + Math.cos(mAngle)*mRadius*radiusForPupil);
-        float pupilY = (float)(haHeight + Math.sin(mAngle)*mRadius*radiusForPupil);
+        float drawPupilX = (float)(haWidth + mPupilX * radiusForPupil);
+        float drawPupilY = (float)(haHeight + mPupilY * radiusForPupil);
 
-        canvas.drawCircle(pupilX, pupilY, radius/5, mPaintPupilFill);
+        canvas.drawCircle(drawPupilX, drawPupilY, radius/5, mPaintPupilFill);
 
         canvas.drawCircle(mLastX,mLastY, 10, mPaintPupilFill);
     }
