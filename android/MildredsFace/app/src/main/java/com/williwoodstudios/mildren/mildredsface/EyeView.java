@@ -13,6 +13,27 @@ import android.view.View;
  * Created by robwilliams on 15-08-28.
  */
 public class EyeView extends View {
+    public interface PositionChangedListener {
+        void positionChanged(EyeView eyeView, double pupilX, double pupilY);
+    }
+
+    private PositionChangedListener mPositionChangedListener;
+
+    public void setPositionChangedListener(PositionChangedListener positionChangedListener) {
+        mPositionChangedListener = positionChangedListener;
+    }
+
+    public void setPosition(double pupilX, double pupilY) {
+        if (pupilX != mPupilX || pupilY != mPupilY) {
+            mPupilX = pupilX;
+            mPupilY = pupilY;
+            invalidate();
+            if (mPositionChangedListener != null) {
+                mPositionChangedListener.positionChanged(this,mPupilX,mPupilY);
+            }
+        }
+    }
+
     private static final String LOG_TAG = "EyeView";
     private Paint mPaintEyeFill;
     private Paint mPaintEyeOutline;
@@ -75,8 +96,7 @@ public class EyeView extends View {
         float deltaY = mLastY - haHeight;
 
         if (deltaX == 0 && deltaY == 0) {
-            mPupilX = 0;
-            mPupilY = 0;
+            setPosition(0,0);
         } else if (deltaX == 0) {
             double possible = deltaY / radiusForPupil;
             if (possible < -1) {
@@ -85,8 +105,7 @@ public class EyeView extends View {
                 possible = 1;
             }
 
-            mPupilX = 0;
-            mPupilY = possible;
+            setPosition(0,possible);
         } else if (deltaY == 0) {
             double possible = deltaX / radiusForPupil;
             if (possible < -1) {
@@ -94,8 +113,7 @@ public class EyeView extends View {
             } else if (possible > 1) {
                 possible = 1;
             }
-            mPupilX = possible;
-            mPupilY = 0;
+            setPosition(possible,0);
         } else {
             double angle = Math.atan(deltaY / deltaX);
             if (deltaX > 0 && deltaY > 0) {
@@ -109,18 +127,13 @@ public class EyeView extends View {
             }
             double effectiveRadius = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
             if (effectiveRadius > radiusForPupil) {
-                mPupilX = Math.cos(angle);
-                mPupilY = Math.sin(angle);
+                setPosition(Math.cos(angle),Math.sin(angle));
             } else {
-                mPupilX = deltaX / radiusForPupil;
-                mPupilY = deltaY / radiusForPupil;
+                setPosition(deltaX / radiusForPupil,deltaY / radiusForPupil);
             }
 
             Log.e(LOG_TAG,"Angle: " + angle + " " + (angle / 2 / Math.PI * 360));
         }
-
-        // invalidate((int)(mLastX-20),(int)(mLastY-20),(int)(mLastX+20),(int)(mLastY+20));
-        invalidate();
         return true;
     }
 
