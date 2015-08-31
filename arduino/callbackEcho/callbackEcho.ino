@@ -8,6 +8,8 @@ Adafruit invests time and resources providing this open source code,
 please support Adafruit and open-source hardware by purchasing 
 products from Adafruit!
 
+This is a new line
+
 Written by Kevin Townsend/KTOWN  for Adafruit Industries.
 MIT license, check LICENSE for more information
 All text above, and the splash screen below must be included in any redistribution
