@@ -1,0 +1,15 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#ffff0000"
+    android:excludeFromRecents="true"
+    android:theme="@android:style/Theme.Holo"
+    tools:context="com.williwoodstudios.mildren.mildredsface.DeviceSelectionActivity">
+
+    <ListView
+        android:id="@+id/listViewDevices"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" />
+
+</RelativeLayout>

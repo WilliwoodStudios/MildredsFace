@@ -3,23 +3,29 @@
     android:layout_height="match_parent" android:paddingLeft="0dp"
     android:paddingRight="0dp"
     android:paddingTop="0dp"
-    android:paddingBottom="0dp" tools:context=".EyeActivity">
+    android:paddingBottom="0dp" tools:context=".EyeActivity"
+    android:theme="@android:style/Theme.Holo">
 
     <LinearLayout
+        android:orientation="vertical"
         android:id="@+id/layoutControls"
-        android:layout_width="100dp"
-        android:background="#ff0000"
+        android:layout_width="10mm"
         android:layout_alignParentTop="true"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_height="match_parent">
+
+        <ImageButton
+            android:layout_width="10mm"
+            android:layout_height="10mm"
+            android:id="@+id/imageButtonEyeMode"
+            />
 
     </LinearLayout>
     <com.williwoodstudios.mildren.mildredsface.EyeView
         class="com.williwoodstudios.mildren.mildredsface.EyeView"
         android:id="@+id/viewLeftEye"
         android:layout_alignParentTop="true"
-        android:background="#00ff00"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_toLeftOf="@id/layoutControls"
@@ -29,7 +35,6 @@
         class="com.williwoodstudios.mildren.mildredsface.EyeView"
         android:id="@+id/viewRightEye"
         android:layout_alignParentTop="true"
-        android:background="#0000ff"
         android:layout_toRightOf="@id/layoutControls"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"

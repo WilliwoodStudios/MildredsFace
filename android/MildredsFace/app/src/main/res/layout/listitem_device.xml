@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <LinearLayout
+        android:id="@+id/linearLayoutDetails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textViewDeviceName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="7mm"
+            android:text="Name" />
+
+        <TextView
+            android:id="@+id/textViewDeviceAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="4mm"
+            android:text="ad::re::ss" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textViewRSSI"
+        android:layout_width="15mm"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:textSize="8mm"
+        android:text="-48" />
+
+
+</RelativeLayout>

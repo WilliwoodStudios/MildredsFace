@@ -2,5 +2,6 @@
     <string name="app_name">Mildred\'s Face</string>
 
     <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Bluetooth</string>
+    <string name="title_activity_device_selection">Mildred\'s Blue Teeth</string>
 </resources>
