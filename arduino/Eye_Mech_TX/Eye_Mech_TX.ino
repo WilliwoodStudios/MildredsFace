@@ -1,43 +1,47 @@
-#include "Wire.h"
 #include "WiiClassy.h"
-#include "SoftwareSerial.h"
+#include "Wire.h"
 #include <Servo.h>
 
-WiiClassy classy = WiiClassy();
-SoftwareSerial softwareSerial(7,8);
+/**
+ * Used to indicate that the controller is plugged into Analogue pins 2~5, 
+ * using 2&3 for power.
+ */
+static const bool ADAPTER_IN_A2345 = false;
 
-int spd = 10;
+WiiClassy classy = WiiClassy();
 
 void setup() 
 {
+  if (ADAPTER_IN_A2345) {
+    digitalWrite(A3,1);
+    digitalWrite(A2,0);
+    pinMode(A3,OUTPUT);
+    pinMode(A2,OUTPUT);
+  }
+
   delay(100);
   classy.init();
   delay(100);
   classy.update();
 
-  softwareSerial.begin(9600);
+  Serial.begin(38400);
 }
 
 
 // Left Stick :  0 ~ 63
 // Right Stick: 0 ~ 31
 
-int xMin = 30;
-int xMax = 120;
-
-int yMin = 12;
-int yMax = 162;
+uint8_t messageBuffer[5];
 
 void loop() 
 {
   classy.update();
 
-  uint8_t messageBuffer[5];
   messageBuffer[0] = classy.leftStickX + '!';
   messageBuffer[1] = classy.leftStickY + '!';
   messageBuffer[2] = classy.rightStickX + '!';
   messageBuffer[3] = classy.rightStickY + '!';
-  messageBuffer[4] = ' ';
+  messageBuffer[4] = '\r';
 
-  softwareSerial.write(messageBuffer,sizeof(messageBuffer));
+  Serial.write(messageBuffer,sizeof(messageBuffer));
 }
